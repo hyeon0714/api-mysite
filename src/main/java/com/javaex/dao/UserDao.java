@@ -49,9 +49,13 @@ public class UserDao {
 	}
 	
 	//아이디 중복체크
-	public String idCheck(String id) {
+	public int idCheck(String id) {
 		
-		return sqlSession.selectOne("user.idCheck", id);
+		int a = sqlSession.selectOne("user.idCheck", id);
+		
+		System.out.println(a);
+		
+		return a;
 		
 	}
 }

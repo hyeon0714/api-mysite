@@ -111,11 +111,20 @@ public class UserController {
 	
 	//아이디 중복체크
 	@PutMapping("/api/users/joinform")
-	public void idCheck(@RequestBody UserVo uv) {
+	public JsonResult idCheck(@RequestBody UserVo uv) {
 	
 		System.out.println(uv);
-		String id = uv.getId();
+		uv.getId();
 		
-		us.exeIdCheck(id);
+		int a = us.exeIdCheck(uv.getId());
+		
+		if(a == 1) {
+			
+			return JsonResult.success(a);
+		}else {
+			return JsonResult.fail("중복된 아이디입니다");
+		}
+		
+		
 	}
 }

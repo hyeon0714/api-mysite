@@ -53,7 +53,7 @@ public class UserService {
 	}
 	
 	//아이디 중복체크
-	public String exeIdCheck(String id) {
+	public int exeIdCheck(String id) {
 		
 		return ud.idCheck(id);
 	}
