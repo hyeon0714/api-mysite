@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	<select id="list" resultType="com.javaex.vo.BoardVo">
+		select 	board.no,
+				title,
+				hit,
+				reg_date date,
+				name,
+				users.no userNo
+		from board, users
+		where board.user_no = users.no
+		order by no desc
+	</select>
+	
+	<!-- 읽기(조회수 가져오기) -->
+	<select id="hit" parameterType="int" resultType="com.javaex.vo.BoardVo">
+		select	hit
+		from board
+		where no = #{no}
+	</select>
+	
+	<!-- 읽기(조회수 올리기) -->
+	<update id="upHit" parameterType="com.javaex.vo.BoardVo">
+		update	board
+		set hit = #{hit}
+		where no = #{no}
+	</update>
+	
+	<!-- 읽기(읽기) -->
+	<select id="read" parameterType="int" resultType="com.javaex.vo.BoardVo">
+		select	title,
+				content,
+		        hit,
+		        reg_date date,
+		        name
+		from board, users
+		where board.user_no = users.no
+		and board.no=#{no}
+	</select>
+	
+	<!-- 쓰기 -->
+	<insert id="write" parameterType="com.javaex.vo.BoardVo">
+		insert into board
+		value(null, #{title}, #{content}, 0, date(now()), #{userNo})
+	</insert>
+	
+	<!-- 수정 -->
+	<update id="modify" parameterType="com.javaex.vo.BoardVo">
+		update	board
+		set title = #{title},
+			content = #{content}
+		where no = #{no}
+	</update>
+</mapper>
